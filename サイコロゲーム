@@ -1,30 +1,28 @@
 import random
 
 def setRule():
-    istoSet = input('是否开始设置游戏相关规则:（输入"是"则进入设置，其他则使用默认）')
+    istoSet = input('ゲーム関連ルールの設定を開始するかどうか：（はいを入力すると設定に入り、その他はデフォルトを使用します。）')
     game_Num = 3
     game_Money = 10
     one_Game = 1
-    if istoSet == '是':
-        # 让玩家设置使用几个骰子游戏
-        gameNum = input("请设置玩几个骰子：（请输入数字且大于0，输入其他则使用默认）")
+    if istoSet == 'はい':
+        gameNum = input("いくつかのサイコロをプレイするように設定してください。")
         if gameNum.isdigit():
             if int(gameNum) > 0:
                 game_Num = int(gameNum)
-        # 让玩家设置双方的初始金额
-        gameMoney = input("请设置初始金额：（请输入数字且大于0，输入其他则使用默认）")
+        gameMoney = input("初期金額を設定してください。")
         if gameMoney.isdigit():
             if int(gameMoney) > 0:
                 game_Money = int(gameMoney)
-        # 让玩家设置每次比赛投入金额
-        oneGame = input("请设置每次比赛投入金额:（请输入数字不仅要大于0还需要小于等于初始金额，输入其他则使用默认）")
+        oneGame = input("試合毎の投入金額を設定してください。（数字を入力してください。0より大きいだけではなく、初期金額より小さい必要があります。他のものを入力する場合は標準を使用します。）")
         if oneGame.isdigit():
             if int(oneGame) > 0 and int(oneGame) <= game_Money:
                 one_Game = int(oneGame)
     else:
-        print("恭喜您完成设置！")
+        print("設定完了おめでとうございます。")
     data = [game_Num,game_Money,one_Game]
     return data
+ 
 
 def myGame():
     data=setRule()
@@ -32,18 +30,17 @@ def myGame():
     game_Money1 = data[1]
     game_Money2 = data[1]
     one_Game = data[2]
-    print(str(game_Num) + '个骰子比大小游戏开始')
+    print( 'サイコロ'+str(game_Num) + 'つを大サイズゲームより開始します。')
     while game_Money1 > 0 and game_Money2 > 0:
-        print("您的目前资产：",game_Money1,",AI的目前资产：",game_Money2)
+        print("現在の資産:",game_Money1,",AIの現在の資産：",game_Money2)
         choice = ['大', '小']
-        user_choice = input('买大买小，买定离手:')
+        user_choice = input('大のを買うかそれとも小のを買うか:')
         number = game_Num
         if user_choice in choice:
             points = []
             bigest = game_Num * 6
             smallest = game_Num
             data = get_median(smallest, bigest)
-            # print(data)
             while number > 0:
                 point = random.randrange(1, 7)
                 points.append(point)
@@ -53,27 +50,26 @@ def myGame():
             small = smallest <= total <= data[1]
             win = (big and user_choice == '大') or (small and user_choice == '小')
             if win:
-                print('点数是:' + str(total) + '你赢咯~')
+                print('点数是:' + str(total) + '勝利おめでとうございます！')
                 game_Money1 = game_Money1 + one_Game
                 game_Money2 = game_Money2 - one_Game
             else:
-                print('点数是:' + str(total) + '你输啦！')
+                print('点数是:' + str(total) + '残念ですが、失敗しました！')
                 game_Money1 = game_Money1 - one_Game
                 game_Money2 = game_Money2 + one_Game
         else:
-            print('请输入‘大’或‘小’')
+            print('「大」または「小」を入力してください。')
     else:
         if game_Money1 < 0:
-            print("抱歉您输啦")
+            print("もうお金がないので、ゲームは終わります！")
         else:
-            print("您赢了！666")
-
+            print("相手はもう破産しました。最後の勝利をおめでとうございます！")
+ 
 def get_median(number1, number2):
     data = []
     while number1 <= number2:
         data.append(number1)
         number1 = number1 + 1
-    # print(data)
     data.sort()
     half = len(data) // 2
     lists = [data[half], data[~half]]
