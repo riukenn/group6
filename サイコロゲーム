@@ -1,26 +1,89 @@
 import random
-import time
-print("玩家选择下注：");
-cont = int(input())
-print("输入下注金额：");
-cont2 = int(input())
-r1 = random.randint(1,6)
-print("本金为："+str(1000));
-print("1号骰子值："+str(r1));
-r2 = random.randint(1,6)
-print("2号骰子值："+str(r2));
-r3 = random.randint(1,6)
-print("3号骰子值："+str(r3));
-player=r1+r2+r3
-print("3个骰子和值： " + str(player) )
-if 3<=player<=10 :
-   print("小");
-elif 11<=player<=18 :
-  print("大");  
-time.sleep(2)
-if 3<=cont<=10 :
-  print("玩家失败，扣除1倍金额");
-  print("实时本金："+str(1000-cont2));
-elif 11<=cont<=18 :
-  print("玩家获胜，获得1倍金额");
-  print("实时本金："+str(1000+cont2));
+ 
+ 
+# 首先让玩家通过输入的方式将游戏规则设置好，也可以让其不设置，直接使用默认条件开始游戏
+def setRule():
+    istoSet = input('是否开始设置游戏相关规则:（输入"是"则进入设置，其他则使用默认）')
+    game_Num = 3
+    game_Money = 10
+    one_Game = 1
+    if istoSet == '是':
+        # 让玩家设置使用几个骰子游戏
+        gameNum = input("请设置玩几个骰子：（请输入数字且大于0，输入其他则使用默认）")
+        if gameNum.isdigit():
+            if int(gameNum) > 0:
+                game_Num = int(gameNum)
+        # 让玩家设置双方的初始金额
+        gameMoney = input("请设置初始金额：（请输入数字且大于0，输入其他则使用默认）")
+        if gameMoney.isdigit():
+            if int(gameMoney) > 0:
+                game_Money = int(gameMoney)
+        # 让玩家设置每次比赛投入金额
+        oneGame = input("请设置每次比赛投入金额:（请输入数字不仅要大于0还需要小于等于初始金额，输入其他则使用默认）")
+        if oneGame.isdigit():
+            if int(oneGame) > 0 and int(oneGame) <= game_Money:
+                one_Game = int(oneGame)
+    else:
+        print("恭喜您完成设置！")
+    data = [game_Num,game_Money,one_Game]
+    return data
+ 
+ 
+# 通过比较大小决定游戏胜负，如果一方金额归0则游戏结束，判断输赢
+def myGame():
+    data=setRule()
+    game_Num = data[0]
+    game_Money1 = data[1]
+    game_Money2 = data[1]
+    one_Game = data[2]
+    print(str(game_Num) + '个骰子比大小游戏开始')
+    while game_Money1 > 0 and game_Money2 > 0:
+        print("您的目前资产：",game_Money1,",AI的目前资产：",game_Money2)
+        choice = ['大', '小']
+        user_choice = input('买大买小，买定离手:')
+        number = game_Num
+        if user_choice in choice:
+            points = []
+            bigest = game_Num * 6
+            smallest = game_Num
+            data = get_median(smallest, bigest)
+            # print(data)
+            while number > 0:
+                point = random.randrange(1, 7)
+                points.append(point)
+                number = number - 1
+            total = sum(points)
+            big = data[0] <= total <= bigest
+            small = smallest <= total <= data[1]
+            win = (big and user_choice == '大') or (small and user_choice == '小')
+            if win:
+                print('点数是:' + str(total) + '你赢咯~')
+                game_Money1 = game_Money1 + one_Game
+                game_Money2 = game_Money2 - one_Game
+            else:
+                print('点数是:' + str(total) + '你输啦！')
+                game_Money1 = game_Money1 - one_Game
+                game_Money2 = game_Money2 + one_Game
+        else:
+            print('请输入‘大’或‘小’')
+    else:
+        if game_Money1 < 0:
+            print("抱歉您输啦")
+        else:
+            print("您赢了！666")
+ 
+# 获取中间数
+def get_median(number1, number2):
+    data = []
+    while number1 <= number2:
+        data.append(number1)
+        number1 = number1 + 1
+    # print(data)
+    data.sort()
+    half = len(data) // 2
+    lists = [data[half], data[~half]]
+    return lists
+ 
+ 
+if __name__ == '__main__':
+    myGame()
