@@ -1,0 +1,26 @@
+import random
+import time
+print("玩家选择下注：");
+cont = int(input())
+print("输入下注金额：");
+cont2 = int(input())
+r1 = random.randint(1,6)
+print("本金为："+str(1000));
+print("1号骰子值："+str(r1));
+r2 = random.randint(1,6)
+print("2号骰子值："+str(r2));
+r3 = random.randint(1,6)
+print("3号骰子值："+str(r3));
+player=r1+r2+r3
+print("3个骰子和值： " + str(player) )
+if 3<=player<=10 :
+   print("小");
+elif 11<=player<=18 :
+  print("大");  
+time.sleep(2)
+if 3<=cont<=10 :
+  print("玩家失败，扣除1倍金额");
+  print("实时本金："+str(1000-cont2));
+elif 11<=cont<=18 :
+  print("玩家获胜，获得1倍金额");
+  print("实时本金："+str(1000+cont2));
