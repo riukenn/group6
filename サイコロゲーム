@@ -1,7 +1,5 @@
 import random
- 
- 
-# 首先让玩家通过输入的方式将游戏规则设置好，也可以让其不设置，直接使用默认条件开始游戏
+
 def setRule():
     istoSet = input('是否开始设置游戏相关规则:（输入"是"则进入设置，其他则使用默认）')
     game_Num = 3
@@ -27,9 +25,7 @@ def setRule():
         print("恭喜您完成设置！")
     data = [game_Num,game_Money,one_Game]
     return data
- 
- 
-# 通过比较大小决定游戏胜负，如果一方金额归0则游戏结束，判断输赢
+
 def myGame():
     data=setRule()
     game_Num = data[0]
@@ -71,8 +67,7 @@ def myGame():
             print("抱歉您输啦")
         else:
             print("您赢了！666")
- 
-# 获取中间数
+
 def get_median(number1, number2):
     data = []
     while number1 <= number2:
