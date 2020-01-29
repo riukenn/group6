@@ -50,11 +50,11 @@ def myGame():
             small = smallest <= total <= data[1]
             win = (big and user_choice == '大') or (small and user_choice == '小')
             if win:
-                print('点数是:' + str(total) + '勝利おめでとうございます！')
+                print('合計点数は:' + str(total) + '勝利おめでとうございます！')
                 game_Money1 = game_Money1 + one_Game
                 game_Money2 = game_Money2 - one_Game
             else:
-                print('点数是:' + str(total) + '残念ですが、失敗しました！')
+                print('合計点数は:' + str(total) + '残念ですが、失敗しました！')
                 game_Money1 = game_Money1 - one_Game
                 game_Money2 = game_Money2 + one_Game
         else:
