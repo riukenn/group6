@@ -10,14 +10,26 @@ def setRule():
         if gameNum.isdigit():
             if int(gameNum) > 0:
                 game_Num = int(gameNum)
+            else:
+                print("入力誤りは，デフォルト値を採用する。")
+        else:
+            print("入力誤りは，デフォルト値を採用する。")
         gameMoney = input("初期金額を設定してください。")
         if gameMoney.isdigit():
             if int(gameMoney) > 0:
                 game_Money = int(gameMoney)
+            else:
+                print("入力誤りは，デフォルト値を採用する。")
+        else:
+            print("入力誤りは，デフォルト値を採用する。")
         oneGame = input("試合毎の投入金額を設定してください。（数字を入力してください。0より大きいだけではなく、初期金額より小さい必要があります。他のものを入力する場合は標準を使用します。）")
         if oneGame.isdigit():
             if int(oneGame) > 0 and int(oneGame) <= game_Money:
                 one_Game = int(oneGame)
+            else:
+                print("入力誤りは，デフォルト値を採用する。")
+        else:
+            print("入力誤りは，デフォルト値を採用する。")
     else:
         print("設定完了おめでとうございます。")
     data = [game_Num,game_Money,one_Game]
@@ -60,7 +72,7 @@ def myGame():
         else:
             print('「大」または「小」を入力してください。')
     else:
-        if game_Money1 < 0:
+        if game_Money1 <= 0:
             print("もうお金がないので、ゲームは終わります！")
         else:
             print("相手はもう破産しました。最後の勝利をおめでとうございます！")
